@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CampusCash – Smart Expense Tracker for Students</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class' }</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body { font-family: 'Inter', Arial, sans-serif; background: #f8fafc; }
+  .dark body { background: #0b1020; }
+  /* gradient background and gradient text */
+  .grad { background-image: linear-gradient(135deg, #4f46e5, #9333ea, #ec4899); }
+  .grad-text { background-image: linear-gradient(90deg, #6366f1, #a855f7, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  /* glass effect */
+  .glass { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); }
+  /* hover effect on cards */
+  .card { transition: transform 0.2s; }
+  .card:hover { transform: translateY(-5px); }
+</style>
+</head>
+
+<body class="text-slate-800 dark:text-slate-100">
+
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2 font-extrabold text-xl">
+      <span class="grad w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm">₹</span>
+      <span class="grad-text">CampusCash</span>
+    </a>
+    <div class="hidden sm:flex items-center gap-6 text-sm font-medium">
+      <a href="#features" class="hover:text-indigo-500">Features</a>
+      <a href="#app" class="hover:text-indigo-500">Tracker</a>
+      <a href="#how" class="hover:text-indigo-500">How it works</a>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800">🌓</button>
+      <a href="#app" class="grad text-white text-sm font-semibold px-4 py-2 rounded-lg shadow hover:opacity-90">Start free</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<header id="top" class="grad text-white relative overflow-hidden">
+  <div class="absolute -top-24 -left-24 w-80 h-80 bg-pink-400 opacity-30 rounded-full blur-3xl"></div>
+  <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-300 opacity-30 rounded-full blur-3xl"></div>
+  <div class="relative max-w-6xl mx-auto px-4 py-16 sm:py-24 grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <span class="glass inline-block text-xs font-semibold px-3 py-1 rounded-full mb-4">🎓 Built for students</span>
+      <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight">Take control of your <span class="text-yellow-200">student budget</span>.</h1>
+      <p class="mt-4 text-lg">Log expenses in seconds, see where your money goes and stay within your monthly limit. Free and private.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="#app" class="bg-white text-indigo-600 font-bold px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition">Open tracker</a>
+        <a href="#features" class="glass font-semibold px-6 py-3 rounded-xl hover:bg-white/20 transition">See features</a>
+      </div>
+    </div>
+
+    <!-- small summary card inside hero -->
+    <div class="glass rounded-2xl p-5 shadow-2xl">
+      <p class="text-sm">This month at a glance</p>
+      <p id="heroTotal" class="text-4xl font-extrabold mt-1">₹0</p>
+      <div class="h-2 bg-white/25 rounded-full mt-3 overflow-hidden">
+        <div id="heroBar" class="h-full bg-yellow-300" style="width:0%"></div>
+      </div>
+      <div class="grid grid-cols-3 gap-3 mt-4 text-center text-sm">
+        <div class="glass rounded-lg py-2"><p id="heroCount" class="font-bold text-lg">0</p><p class="text-xs">Expenses</p></div>
+        <div class="glass rounded-lg py-2"><p id="heroTop" class="font-bold text-lg">–</p><p class="text-xs">Top category</p></div>
+        <div class="glass rounded-lg py-2"><p id="heroLeft" class="font-bold text-lg">₹0</p><p class="text-xs">Left</p></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- FEATURES SECTION -->
+<section id="features" class="max-w-6xl mx-auto px-4 py-16">
+  <div class="text-center max-w-xl mx-auto">
+    <h2 class="text-3xl font-extrabold">Everything you need, <span class="grad-text">nothing you don't</span></h2>
+    <p class="text-slate-500 dark:text-slate-400 mt-2">Simple tools designed around real student spending.</p>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
+    <div class="card bg-white dark:bg-slate-800 rounded-2xl p-5 shadow">
+      <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-xl text-white">⚡</div>
+      <h3 class="font-bold mt-3">Quick entry</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Add an expense in under five seconds.</p>
+    </div>
+    <div class="card bg-white dark:bg-slate-800 rounded-2xl p-5 shadow">
+      <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-pink-500 to-orange-400 flex items-center justify-center text-xl text-white">📊</div>
+      <h3 class="font-bold mt-3">Category insights</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Visual bars show where your money goes.</p>
+    </div>
+    <div class="card bg-white dark:bg-slate-800 rounded-2xl p-5 shadow">
+      <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-400 flex items-center justify-center text-xl text-white">🎯</div>
+      <h3 class="font-bold mt-3">Budget alerts</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Get warned at 80% and when you go over.</p>
+    </div>
+    <div class="card bg-white dark:bg-slate-800 rounded-2xl p-5 shadow">
+      <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-500 flex items-center justify-center text-xl text-white">🔒</div>
+      <h3 class="font-bold mt-3">Private by design</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Data stays in your browser. No sign-up.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKER SECTION -->
+<section id="app" class="bg-gradient-to-b from-indigo-50 to-purple-50 dark:from-slate-900 dark:to-slate-900 py-16">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl font-extrabold text-center mb-8">Your <span class="grad-text">expense tracker</span></h2>
+
+    <!-- three summary cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+      <div class="rounded-2xl p-5 text-white shadow-lg bg-gradient-to-br from-indigo-500 to-purple-600">
+        <p class="text-xs uppercase">Total spent</p>
+        <p id="total" class="text-3xl font-extrabold mt-1">₹0</p>
+      </div>
+      <div class="rounded-2xl p-5 text-white shadow-lg bg-gradient-to-br from-sky-500 to-indigo-500">
+        <p class="text-xs uppercase">Monthly budget</p>
+        <div class="flex items-center gap-1 mt-1">
+          <span class="text-2xl font-extrabold">₹</span>
+          <input id="budget" type="number" value="5000" oninput="changeBudget()" class="w-full bg-transparent border-b border-white text-2xl font-extrabold focus:outline-none">
+        </div>
+      </div>
+      <div id="remCard" class="rounded-2xl p-5 text-white shadow-lg bg-gradient-to-br from-emerald-500 to-teal-500">
+        <p class="text-xs uppercase">Remaining</p>
+        <p id="remaining" class="text-3xl font-extrabold mt-1">₹0</p>
+        <div class="h-2 bg-white/30 rounded-full mt-2 overflow-hidden">
+          <div id="bar" class="h-full bg-white" style="width:0%"></div>
+        </div>
+        <p id="warn" class="text-xs mt-1"></p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- left side: form + category bars -->
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow p-5 space-y-3">
+          <h3 class="font-bold">Add expense</h3>
+          <input id="desc" type="text" placeholder="Description (e.g. Canteen lunch)" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-transparent px-3 py-2">
+          <div class="grid grid-cols-2 gap-3">
+            <input id="amount" type="number" placeholder="Amount ₹" class="rounded-lg border border-slate-300 dark:border-slate-600 bg-transparent px-3 py-2">
+            <input id="date" type="date" class="rounded-lg border border-slate-300 dark:border-slate-600 bg-transparent px-3 py-2">
+          </div>
+          <select id="cat" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2">
+            <option value="Food">🍔 Food</option>
+            <option value="Transport">🚌 Transport</option>
+            <option value="Books">📚 Books</option>
+            <option value="Fun">🎮 Fun</option>
+            <option value="Other">📦 Other</option>
+          </select>
+          <p id="err" class="text-sm text-red-500"></p>
+          <button onclick="addExpense()" class="grad w-full text-white font-semibold rounded-lg py-2.5 shadow hover:opacity-90">Add expense</button>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow p-5">
+          <h3 class="font-bold mb-3">By category</h3>
+
+          <div class="flex justify-between text-sm"><span>🍔 Food</span><span id="t-Food">₹0</span></div>
+          <div class="h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full mb-3 overflow-hidden"><div id="b-Food" class="h-full bg-gradient-to-r from-orange-400 to-red-500" style="width:0%"></div></div>
+
+          <div class="flex justify-between text-sm"><span>🚌 Transport</span><span id="t-Transport">₹0</span></div>
+          <div class="h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full mb-3 overflow-hidden"><div id="b-Transport" class="h-full bg-gradient-to-r from-sky-400 to-blue-600" style="width:0%"></div></div>
+
+          <div class="flex justify-between text-sm"><span>📚 Books</span><span id="t-Books">₹0</span></div>
+          <div class="h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full mb-3 overflow-hidden"><div id="b-Books" class="h-full bg-gradient-to-r from-purple-400 to-indigo-600" style="width:0%"></div></div>
+
+          <div class="flex justify-between text-sm"><span>🎮 Fun</span><span id="t-Fun">₹0</span></div>
+          <div class="h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full mb-3 overflow-hidden"><div id="b-Fun" class="h-full bg-gradient-to-r from-pink-400 to-rose-600" style="width:0%"></div></div>
+
+          <div class="flex justify-between text-sm"><span>📦 Other</span><span id="t-Other">₹0</span></div>
+          <div class="h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden"><div id="b-Other" class="h-full bg-gradient-to-r from-slate-400 to-slate-600" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <!-- right side: expense list -->
+      <div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl shadow p-5">
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <h3 class="font-bold">Recent expenses</h3>
+          <div class="flex gap-2">
+            <select id="filter" onchange="showExpenses()" class="rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-2 py-1 text-sm">
+              <option value="All">All categories</option>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Books">Books</option>
+              <option value="Fun">Fun</option>
+              <option value="Other">Other</option>
+            </select>
+            <button onclick="clearAll()" class="text-sm px-3 py-1 rounded-lg border border-red-300 text-red-500">Clear all</button>
+          </div>
+        </div>
+        <div id="list"></div>
+        <p id="empty" class="text-center text-slate-400 py-10">No expenses yet. Add your first one 👈</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="max-w-6xl mx-auto px-4 py-16">
+  <h2 class="text-3xl font-extrabold text-center">How it <span class="grad-text">works</span></h2>
+  <div class="grid md:grid-cols-3 gap-6 mt-10 text-center">
+    <div>
+      <div class="grad w-12 h-12 mx-auto rounded-full text-white font-bold flex items-center justify-center">1</div>
+      <h3 class="font-bold mt-3">Set your budget</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Enter what you can spend this month.</p>
+    </div>
+    <div>
+      <div class="grad w-12 h-12 mx-auto rounded-full text-white font-bold flex items-center justify-center">2</div>
+      <h3 class="font-bold mt-3">Log expenses</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Add each purchase with a category.</p>
+    </div>
+    <div>
+      <div class="grad w-12 h-12 mx-auto rounded-full text-white font-bold flex items-center justify-center">3</div>
+      <h3 class="font-bold mt-3">Stay on track</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Watch the bar and adjust your habits.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="grad text-white">
+  <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm">
+    <span class="grad w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm">₹</span>
+    <p class="font-bold">CampusCash</p>
+    <p>©CS25223 Pranav Thaware 2026 CampusCash · A student project built with HTML, Tailwind CSS &amp; JavaScript</p>
+  </div>
+</footer>
+
+<script>
+// ---------- variables ----------
+var expenses = [];
+var budget = 5000;
+var categories = ["Food", "Transport", "Books", "Fun", "Other"];
+
+// ---------- small helper functions ----------
+function getIcon(cat) {
+  if (cat == "Food") return "🍔";
+  if (cat == "Transport") return "🚌";
+  if (cat == "Books") return "📚";
+  if (cat == "Fun") return "🎮";
+  return "📦";
+}
+
+function getColor(cat) {
+  if (cat == "Food") return "from-orange-400 to-red-500";
+  if (cat == "Transport") return "from-sky-400 to-blue-600";
+  if (cat == "Books") return "from-purple-400 to-indigo-600";
+  if (cat == "Fun") return "from-pink-400 to-rose-600";
+  return "from-slate-400 to-slate-600";
+}
+
+// ---------- save and load (localStorage) ----------
+function saveData() {
+  try {
+    localStorage.setItem("cc_expenses", JSON.stringify(expenses));
+    localStorage.setItem("cc_budget", budget);
+  } catch (e) { }
+}
+
+function loadData() {
+  try {
+    var savedExpenses = localStorage.getItem("cc_expenses");
+    var savedBudget = localStorage.getItem("cc_budget");
+    if (savedExpenses) { expenses = JSON.parse(savedExpenses); }
+    if (savedBudget) { budget = Number(savedBudget); }
+    if (localStorage.getItem("cc_dark") == "yes") {
+      document.documentElement.classList.add("dark");
+    }
+  } catch (e) { }
+}
+
+// ---------- dark mode ----------
+function toggleTheme() {
+  document.documentElement.classList.toggle("dark");
+  try {
+    if (document.documentElement.classList.contains("dark")) {
+      localStorage.setItem("cc_dark", "yes");
+    } else {
+      localStorage.setItem("cc_dark", "no");
+    }
+  } catch (e) { }
+}
+
+// ---------- add, delete, clear ----------
+function addExpense() {
+  var desc = document.getElementById("desc").value;
+  var amount = Number(document.getElementById("amount").value);
+  var date = document.getElementById("date").value;
+  var cat = document.getElementById("cat").value;
+
+  if (desc == "" || amount <= 0 || date == "") {
+    document.getElementById("err").innerHTML = "Please enter a description, a positive amount and a date.";
+    return;
+  }
+  document.getElementById("err").innerHTML = "";
+
+  var newExpense = { id: Date.now(), desc: desc, amount: amount, date: date, cat: cat };
+  expenses.push(newExpense);
+
+  document.getElementById("desc").value = "";
+  document.getElementById("amount").value = "";
+  saveData();
+  updateAll();
+}
+
+function deleteExpense(id) {
+  var newList = [];
+  for (var i = 0; i < expenses.length; i++) {
+    if (expenses[i].id != id) {
+      newList.push(expenses[i]);
+    }
+  }
+  expenses = newList;
+  saveData();
+  updateAll();
+}
+
+function clearAll() {
+  if (expenses.length > 0 && confirm("Delete all expenses?")) {
+    expenses = [];
+    saveData();
+    updateAll();
+  }
+}
+
+function changeBudget() {
+  budget = Number(document.getElementById("budget").value);
+  saveData();
+  updateSummary();
+}
+
+// ---------- show the list of expenses ----------
+function showExpenses() {
+  var filter = document.getElementById("filter").value;
+  var html = "";
+  var count = 0;
+
+  // loop from last to first so newest expense comes on top
+  for (var i = expenses.length - 1; i >= 0; i--) {
+    var e = expenses[i];
+    if (filter != "All" && e.cat != filter) {
+      continue;
+    }
+    count++;
+    html = html + '<div class="flex items-center justify-between py-3 gap-3 border-b border-slate-200 dark:border-slate-700">';
+    html = html + '<div class="flex items-center gap-3">';
+    html = html + '<span class="w-10 h-10 rounded-xl bg-gradient-to-br ' + getColor(e.cat) + ' flex items-center justify-center text-lg">' + getIcon(e.cat) + '</span>';
+    html = html + '<div><p class="font-medium">' + e.desc + '</p>';
+    html = html + '<p class="text-xs text-slate-500 dark:text-slate-400">' + e.cat + ' · ' + e.date + '</p></div>';
+    html = html + '</div>';
+    html = html + '<div class="flex items-center gap-3">';
+    html = html + '<span class="font-semibold">₹' + e.amount + '</span>';
+    html = html + '<button onclick="deleteExpense(' + e.id + ')" class="text-slate-400 hover:text-red-500">✕</button>';
+    html = html + '</div></div>';
+  }
+
+  document.getElementById("list").innerHTML = html;
+
+  if (count == 0) {
+    document.getElementById("empty").style.display = "block";
+  } else {
+    document.getElementById("empty").style.display = "none";
+  }
+}
+
+// ---------- update totals, bars and cards ----------
+function updateSummary() {
+  var total = 0;
+  for (var i = 0; i < expenses.length; i++) {
+    total = total + expenses[i].amount;
+  }
+
+  var left = budget - total;
+  var percent = 0;
+  if (budget > 0) {
+    percent = (total / budget) * 100;
+  }
+  var barWidth = percent;
+  if (barWidth > 100) { barWidth = 100; }
+
+  // main cards
+  document.getElementById("total").innerHTML = "₹" + total;
+  document.getElementById("remaining").innerHTML = "₹" + left;
+  document.getElementById("bar").style.width = barWidth + "%";
+
+  // change colour of remaining card
+  var card = document.getElementById("remCard");
+  var warn = document.getElementById("warn");
+  if (percent >= 100) {
+    card.className = "rounded-2xl p-5 text-white shadow-lg bg-gradient-to-br from-red-500 to-rose-600";
+    warn.innerHTML = "⚠️ Over budget!";
+  } else if (percent >= 80) {
+    card.className = "rounded-2xl p-5 text-white shadow-lg bg-gradient-to-br from-amber-500 to-orange-500";
+    warn.innerHTML = "⚠️ Over 80% of budget used";
+  } else {
+    card.className = "rounded-2xl p-5 text-white shadow-lg bg-gradient-to-br from-emerald-500 to-teal-500";
+    warn.innerHTML = Math.round(percent) + "% used";
+  }
+
+  // category totals and find top category
+  var topCategory = "–";
+  var topAmount = 0;
+  for (var c = 0; c < categories.length; c++) {
+    var name = categories[c];
+    var sum = 0;
+    for (var j = 0; j < expenses.length; j++) {
+      if (expenses[j].cat == name) {
+        sum = sum + expenses[j].amount;
+      }
+    }
+    var width = 0;
+    if (total > 0) {
+      width = (sum / total) * 100;
+    }
+    document.getElementById("t-" + name).innerHTML = "₹" + sum;
+    document.getElementById("b-" + name).style.width = width + "%";
+
+    if (sum > topAmount) {
+      topAmount = sum;
+      topCategory = getIcon(name);
+    }
+  }
+
+  // hero card
+  document.getElementById("heroTotal").innerHTML = "₹" + total;
+  document.getElementById("heroBar").style.width = barWidth + "%";
+  document.getElementById("heroCount").innerHTML = expenses.length;
+  document.getElementById("heroTop").innerHTML = topCategory;
+  document.getElementById("heroLeft").innerHTML = "₹" + left;
+}
+
+function updateAll() {
+  updateSummary();
+  showExpenses();
+}
+
+// ---------- run when page opens ----------
+loadData();
+document.getElementById("budget").value = budget;
+document.getElementById("date").value = new Date().toISOString().slice(0, 10);
+updateAll();
+</script>
+</body>
+</html>
